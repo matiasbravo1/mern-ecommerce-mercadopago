@@ -33,7 +33,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-require('./routes/myRoutes')(app);
 require('./routes/authRoutes')(app);
 
 if (process.env.NODE_ENV === 'production') {

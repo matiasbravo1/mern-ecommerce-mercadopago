@@ -3,8 +3,9 @@ const Product = mongoose.model('products');
 
 module.exports = app => {
 
-	app.get('/api/search_products', async (req, res) => {
-    	const products = await Product.find();
+	app.get('/api/search_products/:category', async (req, res) => {
+		
+	   	const products = await Product.find({ category: req.params.category });
 
     	res.send(products);
   	});

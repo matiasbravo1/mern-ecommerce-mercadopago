@@ -1,16 +1,34 @@
 import React, { Component } from 'react';
-import { Input, Menu, Icon, Button } from 'semantic-ui-react';
+import { Menu, Icon, Button } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 import './Navbar.css';
 
-export default class Navbar extends Component {
-  
+class Navbar extends Component {
+  renderContent() {
+    switch (this.props.auth) {
+      case null:
+        return;
+      case false:
+        return (
+        	<Button color='google plus' href="/auth/google">
+		      <Icon name='google' /> Ingresar con Google
+		    </Button>
+		);
+      default:
+        return (
+			<Button color='google plus' href="/api/logout">
+				<Icon name='google' /> Cerrar Sesión
+			</Button>
+        );
+    }
+  }
+
   render() {
-    
     return (
       <Menu secondary color='blue' inverted size='large' className="navbar ui top fixed">
 
-        <img src='images/emercari_logo.png' className='logo'/>
-
+        <img src='images/emercari_logo.png' className='logo' alt='Emercari Logo'/>
+        
         <Menu.Menu position='right'>
           	<Menu.Item
 	          	name='whatsapp'
@@ -37,12 +55,16 @@ export default class Navbar extends Component {
 	        	<Icon name='instagram' size='large' style={{ margin: '0'}}/>
 	        </Menu.Item>
 	        <div style={{ display: 'flex', alignItems: 'center' }}>
-        		<Button color='google plus' href="/auth/google">
-			      <Icon name='google' /> Ingresar con Google
-			    </Button>
+        		{ this.renderContent() }
 			</div>
         </Menu.Menu>
       </Menu>
     )
   }
 }
+
+function mapStateToProps({ auth }) {
+  return { auth };
+}
+
+export default connect(mapStateToProps)(Navbar);

@@ -7,6 +7,7 @@ import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import Inicio from './Inicio';
 import Como_comprar from './Como_comprar';
+import Products from './Products';
 
 class App extends Component {
   componentDidMount() {
@@ -21,6 +22,7 @@ class App extends Component {
           <Sidebar />
           <Route exact path="/" component={Inicio} />
           <Route exact path="/como_comprar" component={Como_comprar} />
+          <Route exact path="/products/:category" component={Products} />
         </BrowserRouter>
 
       </div>

@@ -13,10 +13,11 @@ module.exports = app => {
 	app.get('/api/create_product', async (req, res) => {
 		
 	    const product = new Product({
-	      name: 'Aceite',
-	      code: '44444',
-	      description: 'De Girasol',
-	      price: 56
+	      name: 'Mostaza',
+	      category: 1,
+	      code: '3333',
+	      description: 'Savora',
+	      price: 77
 	    });
 
 	    try {

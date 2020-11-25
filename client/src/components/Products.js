@@ -16,7 +16,11 @@ const Products = props => {
 
 	const renderContent = () => {
 		if (products.length !== 0){
-			return products.map( product => { return product.name});
+			return products.map( product => {
+				return(
+					<Product product={ product } />
+				)
+			});
 		}else{
 			return "No hay productos.";
 		}
@@ -25,8 +29,10 @@ const Products = props => {
 	return(
 		<div className='main-wrapper'> 
         <h2>Categoria: { category } </h2>
-        <h2>{renderContent()}</h2>
-        <Product />
+        <div style={{display: 'flex'}}>
+        {renderContent()}
+        </div>
+        
       </div>
 	);
 

@@ -12,11 +12,7 @@ const productSchema = new Schema({
   presentation: String,
   in: Number,
   out: Number,
-  reserved: Number,
-  price: { type: Number, default: 0 },
-  cost: { type: Number, default: 0 },
-  show: { type: Boolean, default: true },
-  date_created: { type: Date, default: Date.now }
+  reserved: Number
 });
 
 mongoose.model('products', productSchema);

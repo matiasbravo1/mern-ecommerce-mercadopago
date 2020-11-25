@@ -14,7 +14,7 @@ const productSchema = new Schema({
   out: Number,
   reserved: Number,
   price: { type: Number, default: 0 },
-  cost_price: { type: Number, default: 0 },
+  cost: { type: Number, default: 0 },
   show: { type: Boolean, default: true },
   date_created: { type: Date, default: Date.now }
 });

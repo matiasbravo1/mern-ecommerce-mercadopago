@@ -13,11 +13,18 @@ module.exports = app => {
 	app.get('/api/create_product', async (req, res) => {
 		
 	    const product = new Product({
-	      name: 'Mostaza',
-	      category: 1,
-	      code: '3333',
-	      description: 'Savora',
-	      price: 77
+	      name: 'Dulce de Leche',
+		  brand: 'La Serenísima',
+		  category: 2,
+		  subcategory: 2,
+		  code: '433344',
+		  short_description: 'Dulce de leche repostero.',
+		  presentation: '500 gramos',
+		  in: 5,
+		  out: 0,
+		  reserved: 0,
+		  price: 120,
+		  cost: 85
 	    });
 
 	    try {

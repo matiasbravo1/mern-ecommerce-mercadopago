@@ -1,11 +1,15 @@
 import { Icon } from 'semantic-ui-react';
+import { useDispatch } from 'react-redux';
+import { selectProduct } from '../actions';
 import './Product.css';
 
-const Product = ({ product, openModal, setProducto }) => {
+const Product = ({ product, setShouldDisplayModal }) => {
 
-	const AddToCart = () => {
-		setProducto();
-		openModal();
+	const dispatch = useDispatch();
+
+	const addToCart = () => {
+		dispatch(selectProduct(product));
+		setShouldDisplayModal(true);
 	}
 
 	return(
@@ -23,7 +27,7 @@ const Product = ({ product, openModal, setProducto }) => {
 						<p className="text-price">$ {product.price}</p>
 					</div>
 					<div className="card-carrito">
-						<Icon onClick={() => AddToCart()} name='cart plus' size='large' />
+						<Icon onClick={() => addToCart()} name='cart plus' size='large' />
 					</div>
 				</div>
 			</div>

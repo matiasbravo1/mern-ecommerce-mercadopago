@@ -1,14 +1,12 @@
-import React from 'react';
-import { Button, Header, Image, Modal } from 'semantic-ui-react';
+import React from 'react'
+import { Button, Header, Image, Modal } from 'semantic-ui-react'
 
-function ModalExample(props) {
-  const [open, setOpen] = React.useState(props.abierto);
+function ModalExampleModal({setShouldDisplayModal}) {
 
   return (
     <Modal
-      onClose={() => setOpen(false)}
-      onOpen={() => setOpen(true)}
-      open={open}
+      open={true}
+      onClose={() => setShouldDisplayModal(false)}
     >
       <Modal.Header>Select a Photo</Modal.Header>
       <Modal.Content image>
@@ -23,14 +21,14 @@ function ModalExample(props) {
         </Modal.Description>
       </Modal.Content>
       <Modal.Actions>
-        <Button color='black' onClick={() => setOpen(false)}>
+        <Button color='black' onClick={() => setShouldDisplayModal(false)}>
           Nope
         </Button>
         <Button
           content="Yep, that's me"
           labelPosition='right'
           icon='checkmark'
-          onClick={() => setOpen(false)}
+          onClick={() => setShouldDisplayModal(false)}
           positive
         />
       </Modal.Actions>
@@ -38,4 +36,4 @@ function ModalExample(props) {
   )
 }
 
-export default ModalExample;
+export default ModalExampleModal

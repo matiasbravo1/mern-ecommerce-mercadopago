@@ -12,21 +12,10 @@ import Message from './Message';
 
 const App = () => {
   const dispatch = useDispatch();
-  const message = useSelector(store => store.message);
-  const [shouldDisplayMessage, setShouldDisplayMessage] = useState(false);
-
+  
   useEffect(() => {
-    dispatch(fetchUser)
-  }, [ dispatch ])
-
-  useEffect(() => {
-    if(message.message){
-      setShouldDisplayMessage(true);
-      setTimeout(() => setShouldDisplayMessage(false),3000)
-    }else{
-      setShouldDisplayMessage(false);
-    }
-  }, [ message ])
+    dispatch(fetchUser())
+  }, [])
 
   return (
     <div>
@@ -36,7 +25,7 @@ const App = () => {
         <Route exact path="/" component={Inicio} />
         <Route exact path="/como_comprar" component={Como_comprar} />
         <Route exact path="/products/:category" component={Products} />
-        { shouldDisplayMessage && ( <Message /> ) }
+        <Message />
       </BrowserRouter>
     </div>
   );

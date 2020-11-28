@@ -11,8 +11,10 @@ class Sidebar extends Component {
   render() {
     const { activeItem } = this.state
 
+    const sidebarHeight = window.innerHeight - 46;
+
     return (
-    	<div className='sidebar-wrapper'>
+    	<div className='sidebar-wrapper' style={{ height: sidebarHeight }}>
       <Menu vertical inverted>
       	<Link to='/' className="left brand-logo">
 	        <Menu.Item

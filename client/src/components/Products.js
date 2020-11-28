@@ -4,19 +4,25 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../actions';
 import Product from './Product';
 import Modal from './Modal';
+import { Loader, Dimmer, Segment } from 'semantic-ui-react';
 import './Main.css';
 
 const Products = props => {
 	const [shouldDisplayModal, setShouldDisplayModal] = useState(false);
+	const [shouldDisplayLoader, setShouldDisplayLoader] = useState(false);
 
 	const products = useSelector(store => store.products);
 	const dispatch = useDispatch();
 	const category = props.match.params.category;
 	
+	useEffect(() => {
+		setShouldDisplayLoader(true);
+    dispatch(fetchProducts(category));
+  }, [ category, dispatch ]);
 
-	useEffect(() => {		
-        dispatch(fetchProducts(category));
-    }, [ category, dispatch ]);
+  useEffect(() => {
+		setShouldDisplayLoader(false);
+  }, [ products ]);
 
 	const renderContent = () => {
 		if (products.length !== 0){
@@ -32,17 +38,27 @@ const Products = props => {
 		}else{
 			return "No hay productos.";
 		}
+
 	}
 
+	const dimmerWidth = window.innerWidth - 220;
+	const mainHeight = window.innerHeight;
+
 	return(
-		<div className='main-wrapper'> 
-	        <h2>Categoria: { category } </h2>
-	        
-	        <div style={{display: 'flex'}}>
-	        	{renderContent()}
-	        </div>
-	        {	shouldDisplayModal && (	<Modal setShouldDisplayModal = { setShouldDisplayModal } /> )		}
+		<div>
+			<Dimmer className='main-wrapper' style={{width: dimmerWidth, height: mainHeight }} active={shouldDisplayLoader}>
+				<Loader/>
+			</Dimmer>
+			<div className='main-wrapper' style={{height: mainHeight }}>
+        <h2>Categoria: { category } </h2>
+        
+        <div style={{display: 'flex'}}>
+        	{renderContent()}
+        </div>
+
+		    {	shouldDisplayModal && (	<Modal setShouldDisplayModal = { setShouldDisplayModal } /> )		}
 	    </div>
+    </div>
 	);
 
 }

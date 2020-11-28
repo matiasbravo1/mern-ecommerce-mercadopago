@@ -8,4 +8,5 @@
 	padding-left: 6px;
 	padding-right: 6px;
 	height: 46px;
+	z-index: 2000!important;
 }

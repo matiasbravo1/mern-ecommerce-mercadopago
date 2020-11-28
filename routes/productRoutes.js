@@ -14,10 +14,21 @@ module.exports = app => {
 	});
 
 	app.post('/api/add_product', requireLogin, async (req, res) => {
-		//chequear disponibilidad
-		//chequear logueado (middleware)
-		//chequear si ya existe
+		//Check existence
+		const product = await Product.findById(req.body.product_id);
+	    
+	    if (!product){
+	    	res.send({ error: 'El producto ya no existe.' });
+	    }
 
+	    //Check avaibility
+	    const avaible = product.in - product.out - product.reserved;
+	    
+	    if (avaible < req.body.quantity){
+	    	res.send({ error: 'El producto ya no posee stock suficiente.' });
+	    }
+
+	    //Add to Cart
 		const cart = new Cart({
 	      product_id: req.body.product_id,
 		  user_id: req.user._id,
@@ -26,12 +37,14 @@ module.exports = app => {
 
 		try {
 	      const new_cart = await cart.save();
-	      res.send(new_cart);
 	    } catch (err) {
-	      res.status(422).send(err);
+	      res.send({ error: err });
 	    }
 		
-   	//const products = await Product.find({ category: req.params.category });
+		//Find and Populate Cart Products
+		const cart_products = await Cart.find({ user_id: req.user._id }).populate('product_id').exec();
+		res.send(cart_products);
+
 	});
 
 	app.get('/api/create_product', async (req, res) => {

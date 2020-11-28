@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Dropdown, Icon, Input, Menu } from 'semantic-ui-react'
+import { Dropdown, Icon, Input, Menu, Label } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './Sidebar.css';
 
@@ -34,6 +35,21 @@ class Sidebar extends Component {
 	          Como Comprar
 	        </Menu.Item>
 	    </Link>
+        <Menu.Item
+          name='mi_carrito'
+          active={activeItem === 'mi_carrito'}
+          onClick={this.handleItemClick}
+        >
+          Mi Carrito
+          <Label
+           circular
+           color='green'
+           style={{ float: 'none' }}
+          >
+          	{ Object.keys(this.props.cart).length }
+          </Label>
+        </Menu.Item>
+
         <Menu.Item
           name='mis_compras'
           active={activeItem === 'mis_compras'}
@@ -85,4 +101,8 @@ class Sidebar extends Component {
   }
 }
 
-export default Sidebar;
+const mapStateToProps = ({ cart }) => {
+	return { cart };
+}
+
+export default connect(mapStateToProps)(Sidebar);

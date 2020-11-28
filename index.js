@@ -2,10 +2,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const keys = require('./config/keys');
+const bodyParser = require('body-parser');
 const passport = require('passport');
 
 require('./models/User');
 require('./models/Product');
+require('./models/Cart');
 
 require('./services/passport');
 
@@ -23,6 +25,8 @@ mongoose
   });
 
 const app = express();
+
+app.use(bodyParser.json());
 
 app.use(
   cookieSession({

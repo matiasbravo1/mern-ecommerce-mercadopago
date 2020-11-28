@@ -26,7 +26,7 @@ export const addProduct = (product_id, quantity) => async dispatch => {
     
     if (!res.data.error){
       dispatch({ type: CART_PRODUCTS, payload: res.data });
-      dispatch({ type: MESSAGE, payload: { message:'Producto agregado.', color: 'green'} });
+      dispatch({ type: MESSAGE, payload: { message:'Producto agregado al carrito.', color: 'green'} });
     }else{
       dispatch({ type: MESSAGE, payload: { message: res.data.error, color: 'red'} });
     }

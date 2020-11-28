@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Message } from 'semantic-ui-react';
+import { Transition } from 'semantic-ui-react';
 import { useSelector } from 'react-redux';
-//import './ErrorMessage.css';
+import './Message.css';
 
 const CustomMessage = () => {
 	const message = useSelector(store => store.message);
@@ -17,15 +17,13 @@ const CustomMessage = () => {
   }, [ message ])
 
 	return(
-		<div>
-		{ shouldDisplayMessage && (<Message color={message.color} >
-			<Message.Header>
-			<div style={{ textAlign: 'right' }}>
-				{ message.message }
+		<Transition visible={shouldDisplayMessage} animation='scale' duration={500}>
+    	<div className='msg-container'>
+				<div className='msg-box' style={{ backgroundColor: message.color }}>
+					<p className='msg-text'> { message.message } </p>
+				</div>
 			</div>
-			</Message.Header>
-		</Message>) }
-		</div>
+		</Transition>
 	)
 }
 

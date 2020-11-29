@@ -9,12 +9,13 @@ import Inicio from './Inicio';
 import Como_comprar from './Como_comprar';
 import Products from './Products';
 import Message from './Message';
+import Cart from './Cart';
 
 const App = () => {
   const dispatch = useDispatch();
   
   useEffect(() => {
-    dispatch(fetchUser())
+    dispatch(fetchUser());
   }, [])
 
   return (
@@ -25,6 +26,7 @@ const App = () => {
         <Route exact path="/" component={Inicio} />
         <Route exact path="/como_comprar" component={Como_comprar} />
         <Route exact path="/products/:category" component={Products} />
+        <Route exact path="/cart" component={Cart} />
         <Message />
       </BrowserRouter>
     </div>

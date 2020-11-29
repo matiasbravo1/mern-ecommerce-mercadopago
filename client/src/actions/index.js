@@ -22,15 +22,23 @@ export const selectProduct = (product) => {
 
 export const addProduct = (product_id, quantity) => async dispatch => {
 
-    const res = await axios.post('/api/add_product/', { product_id: product_id, quantity: quantity });
-    
-    if (!res.data.error){
-      dispatch({ type: CART_PRODUCTS, payload: res.data });
-      dispatch({ type: MESSAGE, payload: { message:'Producto agregado al carrito.', color: 'green'} });
-    }else{
-      dispatch({ type: MESSAGE, payload: { message: res.data.error, color: 'red'} });
-    }
+  const res = await axios.post('/api/add_product/', { product_id, quantity });
+  
+  if (!res.data.error){
+    dispatch({ type: CART_PRODUCTS, payload: res.data });
+    dispatch({ type: MESSAGE, payload: { message:'Producto agregado al carrito.', color: 'green'} });
+  }else{
+    dispatch({ type: MESSAGE, payload: { message: res.data.error, color: 'red'} });
+  }
 };
+
+export const fetchCart = () => async dispatch => {
+  const res = await axios.get('/api/fetch_cart/');
+  
+  if (!res.data.error){
+    dispatch({ type: CART_PRODUCTS, payload: res.data });
+  }
+}
 
 export const setMessage = (message, color) => {
   return {

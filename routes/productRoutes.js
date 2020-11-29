@@ -19,6 +19,7 @@ module.exports = app => {
 	    
 	    if (!product){
 	    	res.send({ error: 'El producto ya no existe.' });
+	    	return;
 	    }
 
 	    //Check avaibility
@@ -26,6 +27,15 @@ module.exports = app => {
 	    
 	    if (avaible < req.body.quantity){
 	    	res.send({ error: 'El producto ya no posee stock suficiente.' });
+	    	return;
+	    }
+
+	    //Check if already in Cart
+		const productInCart = await Cart.find({ user_id: req.user._id, product_id: req.body.product_id }).exec();
+		
+		if (productInCart.length != 0){
+	    	res.send({ error: 'El producto ya fue agregado anteriormente.' });
+	    	return;
 	    }
 
 	    //Add to Cart
@@ -39,6 +49,7 @@ module.exports = app => {
 	      const new_cart = await cart.save();
 	    } catch (err) {
 	      res.send({ error: err });
+	      return;
 	    }
 		
 		//Find and Populate Cart Products
@@ -47,16 +58,21 @@ module.exports = app => {
 
 	});
 
+	app.get('/api/fetch_cart', requireLogin, async (req, res) => {
+		const cart_products = await Cart.find({ user_id: req.user._id }).populate('product_id').exec();
+		res.send(cart_products);
+	});
+
 	app.get('/api/create_product', async (req, res) => {
 		
 	    const product = new Product({
-	      name: 'Dulce de Leche',
-		  brand: 'La Serenísima',
-		  category: 2,
+	      name: 'Manteca',
+		  brand: 'La Tonadita',
+		  category: 1,
 		  subcategory: 2,
 		  code: '433344',
-		  short_description: 'Dulce de leche repostero.',
-		  presentation: '500 gramos',
+		  short_description: 'La mejor.',
+		  presentation: '200 gramos',
 		  in: 5,
 		  out: 0,
 		  reserved: 0,

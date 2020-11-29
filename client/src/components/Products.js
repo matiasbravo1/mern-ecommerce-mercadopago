@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../actions';
 import Product from './Product';
 import Modal from './Modal';
-import { Loader, Dimmer, Segment } from 'semantic-ui-react';
+import { Loader, Dimmer } from 'semantic-ui-react';
 import './Main.css';
 
 const Products = props => {

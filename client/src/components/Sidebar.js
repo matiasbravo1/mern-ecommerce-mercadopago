@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
 import { Dropdown, Icon, Input, Menu, Label } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import { fetchCart } from '../actions';
 import { Link } from 'react-router-dom';
 import './Sidebar.css';
 
 class Sidebar extends Component {
   state = {}
+
+  componentDidMount(){
+    this.props.fetchCart();
+  }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
@@ -35,6 +40,7 @@ class Sidebar extends Component {
 	          Como Comprar
 	        </Menu.Item>
 	    </Link>
+      <Link to='/cart' className="left brand-logo">
         <Menu.Item
           name='mi_carrito'
           active={activeItem === 'mi_carrito'}
@@ -49,7 +55,7 @@ class Sidebar extends Component {
           	{ Object.keys(this.props.cart).length }
           </Label>
         </Menu.Item>
-
+      </Link>
         <Menu.Item
           name='mis_compras'
           active={activeItem === 'mis_compras'}
@@ -101,8 +107,8 @@ class Sidebar extends Component {
   }
 }
 
-const mapStateToProps = ({ cart }) => {
-	return { cart };
+const mapStateToProps = ({ cart, auth }) => {
+	return { cart, auth };
 }
 
-export default connect(mapStateToProps)(Sidebar);
+export default connect(mapStateToProps, { fetchCart })(Sidebar);

@@ -7,9 +7,11 @@ const requireLogin = require('../middlewares/requireLogin');
 module.exports = app => {
 
 	app.get('/api/search_products/:category', async (req, res) => {
-		
-   	const products = await Product.find({ category: req.params.category });
-
+	
+	const query = (req.params.category == 'all') ? null : { category: req.params.category };
+   		
+	const products = await Product.find(query);
+  	
   	res.send(products);
 	});
 
@@ -78,16 +80,16 @@ module.exports = app => {
 	    const product = new Product({
 	      name: 'Manteca',
 		  brand: 'La Tonadita',
-		  category: 1,
+		  category: 3,
 		  subcategory: 2,
 		  code: '433344',
-		  short_description: 'La mejor.',
+		  short_description: 'Sin agregado de sal.',
 		  presentation: '200 gramos',
-		  in: 5,
+		  in: 10,
 		  out: 0,
 		  reserved: 0,
-		  price: 120,
-		  cost: 85
+		  price: 200,
+		  cost: 150
 	    });
 
 	    try {

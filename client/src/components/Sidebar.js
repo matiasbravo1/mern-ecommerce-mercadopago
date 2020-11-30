@@ -71,7 +71,7 @@ class Sidebar extends Component {
         <Menu.Item>
           Alimentos
           <Menu.Menu>
-          	<Link to='/products/1' className="left brand-logo">
+          	<Link to='/products/all' className="left brand-logo">
 	            <Menu.Item
 	              name='todos_alimentos'
 	              active={activeItem === 'todos_alimentos'}
@@ -80,7 +80,7 @@ class Sidebar extends Component {
 	              Todos
 	            </Menu.Item>
             </Link>
-            <Link to='/products/2' className="left brand-logo">
+            <Link to='/products/1' className="left brand-logo">
 	            <Menu.Item
 	              name='aderezos'
 	              active={activeItem === 'aderezos'}
@@ -89,7 +89,7 @@ class Sidebar extends Component {
 	              Aderezos - Condimentos
 	            </Menu.Item>
             </Link>
-            <Link to='/products/3' className="left brand-logo">
+            <Link to='/products/2' className="left brand-logo">
 	            <Menu.Item
 	              name='bebidas'
 	              active={activeItem === 'bebidas'}

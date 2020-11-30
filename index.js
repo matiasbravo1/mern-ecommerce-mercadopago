@@ -7,7 +7,6 @@ const passport = require('passport');
 
 require('./models/User');
 require('./models/Product');
-require('./models/Cart');
 
 require('./services/passport');
 

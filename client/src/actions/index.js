@@ -32,6 +32,16 @@ export const addProduct = (product_id, quantity) => async dispatch => {
   }
 };
 
+export const removeProduct = (product_id) => async dispatch => {
+  const res = await axios.post('/api/remove_product/', { product_id });
+  
+  if (!res.data.error){
+    dispatch({ type: CART_PRODUCTS, payload: res.data });
+  }else{
+    dispatch({ type: MESSAGE, payload: { message: res.data.error, color: 'red'} });
+  }
+};
+
 export const fetchCart = () => async dispatch => {
   const res = await axios.get('/api/fetch_cart/');
   

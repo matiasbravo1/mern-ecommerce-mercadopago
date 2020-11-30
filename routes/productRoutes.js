@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Product = mongoose.model('products');
-const Cart = mongoose.model('carts');
+const User = mongoose.model('users');
 const passport = require('passport');
 const requireLogin = require('../middlewares/requireLogin');
 
@@ -31,36 +31,46 @@ module.exports = app => {
 	    }
 
 	    //Check if already in Cart
-		const productInCart = await Cart.find({ user_id: req.user._id, product_id: req.body.product_id }).exec();
+	    const productInCart = await User.findOne( { _id: req.user._id, 'cart.product_id': req.body.product_id });
 		
-		if (productInCart.length != 0){
+		if (productInCart != null){
 	    	res.send({ error: 'El producto ya fue agregado anteriormente.' });
 	    	return;
 	    }
 
-	    //Add to Cart
-		const cart = new Cart({
-	      product_id: req.body.product_id,
-		  user_id: req.user._id,
-		  quantity: req.body.quantity
-	    });
+	 	//Add to Cart
+	 	const user = await User.findOne({ _id: req.user._id });
+	 	user.cart.push({ product_id: req.body.product_id, quantity: req.body.quantity });
 
-		try {
-	      const new_cart = await cart.save();
-	    } catch (err) {
-	      res.send({ error: err });
-	      return;
-	    }
+	 	try {
+	 		const updated = await user.save();
+	 	} catch (err) {
+	 		res.send({ error: err });
+	 		return;
+	 	}
 		
 		//Find and Populate Cart Products
-		const cart_products = await Cart.find({ user_id: req.user._id }).populate('product_id').exec();
-		res.send(cart_products);
+		const cart = await User.findOne({ _id: req.user._id }).populate('cart.product_id');
+		res.send(cart.cart);
+
+	});
+
+	app.post('/api/remove_product', requireLogin,  async (req, res) => {
+		const user = await User.findOne({ _id: req.user._id });
+
+	 	user.cart.id(req.body.product_id).remove();
+
+	 	await user.save();
+
+	 	//Find and Populate Cart Products
+		const cart = await User.findOne({ _id: req.user._id }).populate('cart.product_id');
+		res.send(cart.cart);
 
 	});
 
 	app.get('/api/fetch_cart', requireLogin, async (req, res) => {
-		const cart_products = await Cart.find({ user_id: req.user._id }).populate('product_id').exec();
-		res.send(cart_products);
+		const cart = await User.findOne({ _id: req.user._id }).populate('cart.product_id');
+		res.send(cart.cart);
 	});
 
 	app.get('/api/create_product', async (req, res) => {

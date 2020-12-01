@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Table, Transition, Icon } from 'semantic-ui-react';
-import { removeProduct } from '../actions';
+import { removeProduct, plusOne, minusOne } from '../actions';
 import './Main.css';
 
 const Cart = () => {
@@ -20,7 +20,11 @@ const Cart = () => {
 	        <Table.Cell>{product.product_id.name}</Table.Cell>
 	        <Table.Cell>{product.product_id.brand}</Table.Cell>
 	        <Table.Cell>{product.product_id.presentation}</Table.Cell>
-	        <Table.Cell textAlign='center'>{product.quantity}</Table.Cell>
+	        <Table.Cell textAlign='center'>
+	        	<Icon onClick={() => minusOneCart(product._id)} color='red' name='minus square outline' />
+	        		{product.quantity}
+	        	<Icon onClick={() => plusOneCart(product._id)} color='green' name='plus square outline' style={{ marginLeft: '4px' }} />
+	        </Table.Cell>
 	        <Table.Cell textAlign='center'>{price}</Table.Cell>
 	        <Table.Cell textAlign='center'>{total_price}</Table.Cell>
 	        <Table.Cell collapsing={true}><Icon onClick={() => deleteProduct(product._id)} color='red' name='delete' /></Table.Cell>
@@ -41,6 +45,14 @@ const Cart = () => {
 
 	const deleteProduct = (product_id) => {
 		dispatch(removeProduct(product_id));
+	}
+
+	const plusOneCart = (product_id) => {
+		dispatch(plusOne(product_id));
+	}
+
+	const minusOneCart = (product_id) => {
+		dispatch(minusOne(product_id));
 	}
 
 	useEffect(() => {

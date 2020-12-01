@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { fetchUser } from '../actions';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';

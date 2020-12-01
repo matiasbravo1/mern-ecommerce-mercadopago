@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Dropdown, Icon, Input, Menu, Label } from 'semantic-ui-react';
+import { Input, Menu, Label } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { fetchCart } from '../actions';
 import { Link } from 'react-router-dom';

@@ -70,6 +70,32 @@ module.exports = app => {
 
 	});
 
+	app.post('/api/plus_one_product', requireLogin,  async (req, res) => {
+		//chequear disponibilidad
+
+		const user = await User.findOne({ _id: req.user._id });
+		user.cart.id(req.body.product_id).quantity += 1;
+
+		await user.save();
+
+	 	//Find and Populate Cart Products
+		const cart = await User.findOne({ _id: req.user._id }).populate('cart.product_id');
+		res.send(cart.cart);
+	});
+	
+	app.post('/api/minus_one_product', requireLogin,  async (req, res) => {
+		//Si es 0 que no disminuya.
+
+		const user = await User.findOne({ _id: req.user._id });
+		user.cart.id(req.body.product_id).quantity -= 1;
+
+		await user.save();
+
+	 	//Find and Populate Cart Products
+		const cart = await User.findOne({ _id: req.user._id }).populate('cart.product_id');
+		res.send(cart.cart);
+	});
+
 	app.get('/api/fetch_cart', requireLogin, async (req, res) => {
 		const cart = await User.findOne({ _id: req.user._id }).populate('cart.product_id');
 		res.send(cart.cart);

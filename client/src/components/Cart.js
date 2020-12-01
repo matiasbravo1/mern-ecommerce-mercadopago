@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Table, Transition, Icon } from 'semantic-ui-react';
-import { removeProduct, plusOne, minusOne } from '../actions';
+import { removeProduct, plusOne, minusOne, setMessage, fetchCart } from '../actions';
 import './Main.css';
 
 const Cart = () => {
@@ -14,19 +14,39 @@ const Cart = () => {
 		return cart.map(product => {
 			const price = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(product.product_id.price);
 			const total_price = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(product.quantity * product.product_id.price);
+			const avaible = product.product_id.in - product.product_id.out - product.product_id.reserved;
+			
+			var no_stock = '';
+			if (avaible < product.quantity){
+				no_stock = 'Stock insuficiente.';
+			}
 
 			return(
 				<Table.Row key={product._id}>
 	        <Table.Cell>{product.product_id.name}</Table.Cell>
 	        <Table.Cell>{product.product_id.brand}</Table.Cell>
 	        <Table.Cell>{product.product_id.presentation}</Table.Cell>
-	        <Table.Cell textAlign='center'>
-	        	<Icon onClick={() => minusOneCart(product._id)} color='red' name='minus square outline' />
-	        		{product.quantity}
-	        	<Icon onClick={() => plusOneCart(product._id)} color='green' name='plus square outline' style={{ marginLeft: '4px' }} />
-	        </Table.Cell>
-	        <Table.Cell textAlign='center'>{price}</Table.Cell>
-	        <Table.Cell textAlign='center'>{total_price}</Table.Cell>
+	        
+	        { product.product_id.deleted_at ? (
+			        <>
+			        <Table.Cell textAlign='center' style={{ color:'red' }}>Producto eliminado.</Table.Cell>
+			        <Table.Cell textAlign='center'></Table.Cell>
+			        <Table.Cell textAlign='center'></Table.Cell>
+			        </>
+	        	) : (
+	        		<>
+			        <Table.Cell textAlign='center'>
+			        	<Icon onClick={() => minusOneCart(product._id, product.quantity)} color='red' name='minus square outline' />
+			        		{ product.quantity }
+			        	<Icon onClick={() => plusOneCart(product._id)} color='green' name='plus square outline' style={{ marginLeft: '4px' }} />
+			        	<p style={{ color:'red' }}>{ no_stock }</p>
+			        </Table.Cell>
+			        <Table.Cell textAlign='center'>{price}</Table.Cell>
+			        <Table.Cell textAlign='center'>{total_price}</Table.Cell>
+			        </>
+	        	)
+	        }
+
 	        <Table.Cell collapsing={true}><Icon onClick={() => deleteProduct(product._id)} color='red' name='delete' /></Table.Cell>
 	      </Table.Row>
 			)
@@ -37,7 +57,17 @@ const Cart = () => {
 		var total = 0;
 
 		cart.forEach(product => {
-			total += product.quantity * product.product_id.price;
+			if (product.product_id.deleted_at){
+				return;
+			}
+
+			const avaible = product.product_id.in - product.product_id.out - product.product_id.reserved;
+
+			if (avaible < product.quantity){
+				return;
+			}
+
+			total += product.quantity * product.product_id.price;	
 		});
 
 		return(new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(total));
@@ -51,11 +81,18 @@ const Cart = () => {
 		dispatch(plusOne(product_id));
 	}
 
-	const minusOneCart = (product_id) => {
+	const minusOneCart = (product_id, quantity) => {
+		if (quantity === 1){
+			dispatch(setMessage('Cantidad no puede ser cero.', 'red'))
+			return;
+		}
+
 		dispatch(minusOne(product_id));
 	}
 
 	useEffect(() => {
+		dispatch(fetchCart());
+	
 		setVisibility(true);
 	}, [])
 

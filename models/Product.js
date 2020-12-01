@@ -16,7 +16,8 @@ const productSchema = new Schema({
   price: { type: Number, default: 0 },
   cost: { type: Number, default: 0 },
   show: { type: Boolean, default: true },
-  date_created: { type: Date, default: Date.now }
+  date_created: { type: Date, default: Date.now },
+  deleted_at: Date
 });
 
 mongoose.model('products', productSchema);

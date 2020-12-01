@@ -27,13 +27,23 @@ const Products = props => {
 	const renderContent = () => {
 		if (products.length !== 0){
 			return products.map( product => {
+				const avaible = product.in - product.out - product.reserved;
+
+				if (avaible === 0){
+					return;
+				}
 				
+				if(product.deleted_at){
+					return;
+				}
+
 				return(
 					<Product 
 						product={ product }
 						setShouldDisplayModal = { setShouldDisplayModal }
 					/>
 				)
+			
 			});
 		}else{
 			return "No hay productos.";

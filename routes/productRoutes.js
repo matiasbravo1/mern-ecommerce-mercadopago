@@ -7,38 +7,37 @@ const requireLogin = require('../middlewares/requireLogin');
 module.exports = app => {
 
 	app.get('/api/search_products/:category', async (req, res) => {
-	
-	const query = (req.params.category == 'all') ? null : { category: req.params.category };
-   		
-	const products = await Product.find(query);
-  	
-  	res.send(products);
+		const query = (req.params.category == 'all') ? null : { category: req.params.category };
+	   		
+		const products = await Product.find(query);
+	  	
+	  res.send(products);
 	});
 
 	app.post('/api/add_product', requireLogin, async (req, res) => {
 		//Check existence
 		const product = await Product.findById(req.body.product_id);
 	    
-	    if (!product){
-	    	res.send({ error: 'El producto ya no existe.' });
-	    	return;
-	    }
+    if (product.deleted_at){
+    	res.send({ error: 'El producto ya no existe.' });
+    	return;
+    }
 
-	    //Check avaibility
-	    const avaible = product.in - product.out - product.reserved;
-	    
-	    if (avaible < req.body.quantity){
-	    	res.send({ error: 'El producto ya no posee stock suficiente.' });
-	    	return;
-	    }
+    //Check avaibility
+    const avaible = product.in - product.out - product.reserved;
+    
+    if (avaible < req.body.quantity){
+    	res.send({ error: 'El producto ya no posee stock suficiente.' });
+    	return;
+    }
 
-	    //Check if already in Cart
-	    const productInCart = await User.findOne( { _id: req.user._id, 'cart.product_id': req.body.product_id });
+    //Check if already in Cart
+    const productInCart = await User.findOne( { _id: req.user._id, 'cart.product_id': req.body.product_id });
 		
 		if (productInCart != null){
-	    	res.send({ error: 'El producto ya fue agregado anteriormente.' });
-	    	return;
-	    }
+    	res.send({ error: 'El producto ya fue agregado anteriormente.' });
+    	return;
+    }
 
 	 	//Add to Cart
 	 	const user = await User.findOne({ _id: req.user._id });
@@ -71,10 +70,25 @@ module.exports = app => {
 	});
 
 	app.post('/api/plus_one_product', requireLogin,  async (req, res) => {
-		//chequear disponibilidad
+		//Get cart product
+	  const user = await User.findOne({ _id: req.user._id });
+	  const new_quantity = user.cart.id(req.body.product_id).quantity += 1;
 
-		const user = await User.findOne({ _id: req.user._id });
-		user.cart.id(req.body.product_id).quantity += 1;
+		//Check existence
+		const product = await Product.findById(user.cart.id(req.body.product_id).product_id._id);
+	    
+    if (product.deleted_at){
+    	res.send({ error: 'El producto ya no existe.' });
+    	return;
+    }
+
+    //Check avaibility
+    const avaible = product.in - product.out - product.reserved;
+    
+    if (avaible < new_quantity){
+    	res.send({ error: 'No hay stock suficiente.' });
+    	return;
+    }
 
 		await user.save();
 
@@ -84,8 +98,6 @@ module.exports = app => {
 	});
 	
 	app.post('/api/minus_one_product', requireLogin,  async (req, res) => {
-		//Si es 0 que no disminuya.
-
 		const user = await User.findOne({ _id: req.user._id });
 		user.cart.id(req.body.product_id).quantity -= 1;
 
@@ -103,8 +115,8 @@ module.exports = app => {
 
 	app.get('/api/create_product', async (req, res) => {
 		
-	    const product = new Product({
-	      name: 'Manteca',
+    const product = new Product({
+      name: 'Manteca',
 		  brand: 'La Tonadita',
 		  category: 3,
 		  subcategory: 2,
@@ -116,14 +128,14 @@ module.exports = app => {
 		  reserved: 0,
 		  price: 200,
 		  cost: 150
-	    });
+    });
 
-	    try {
-	      const new_product = await product.save();
-	      res.send(new_product);
-	    } catch (err) {
-	      res.status(422).send(err);
-	    }
+    try {
+      const new_product = await product.save();
+      res.send(new_product);
+    } catch (err) {
+      res.status(422).send(err);
+    }
 
 	});
 

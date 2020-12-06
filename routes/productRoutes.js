@@ -115,27 +115,27 @@ module.exports = app => {
 
 	app.get('/api/create_product', async (req, res) => {
 		
-    const product = new Product({
-      name: 'Manteca',
-		  brand: 'La Tonadita',
-		  category: 3,
+	    const product = new Product({
+	      name: 'Bananas',
+		  brand: 'Ecuador',
+		  category: 2,
 		  subcategory: 2,
-		  code: '433344',
-		  short_description: 'Sin agregado de sal.',
-		  presentation: '200 gramos',
+		  code: '25433422',
+		  short_description: 'Nao tem carozo.',
+		  presentation: '1 kilo',
 		  in: 10,
-		  out: 0,
+		  out: 2,
 		  reserved: 0,
-		  price: 200,
-		  cost: 150
-    });
+		  price: 135,
+		  cost: 105
+	    });
 
-    try {
-      const new_product = await product.save();
-      res.send(new_product);
-    } catch (err) {
-      res.status(422).send(err);
-    }
+	    try {
+	      const new_product = await product.save();
+	      res.send(new_product);
+	    } catch (err) {
+	      res.status(422).send(err);
+	    }
 
 	});
 

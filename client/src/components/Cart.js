@@ -3,13 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Table, Transition, Icon } from 'semantic-ui-react';
 import { removeProduct, plusOne, minusOne, setMessage, fetchCart } from '../actions';
 import './Main.css';
+import './Cart.css';
 
 const Cart = () => {
 	const cart = useSelector(store => store.cart);
 	const [visibility, setVisibility] = useState(false);
+	const [shouldDisplayLoader, setShouldDisplayLoader] = useState('none');
 	const dispatch = useDispatch();
-	const mainWidth = window.innerWidth - 220 - 17;
-	
+
 	const renderContent = () => {
 		return cart.map(product => {
 			const price = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(product.product_id.price);
@@ -36,9 +37,9 @@ const Cart = () => {
 	        	) : (
 	        		<>
 			        <Table.Cell textAlign='center'>
-			        	<Icon onClick={() => minusOneCart(product._id, product.quantity)} color='red' name='minus square outline' />
+			        	<Icon onClick={() => minusOneCart(product._id, product.quantity)} link={true} color='red' name='minus square outline' />
 			        		{ product.quantity }
-			        	<Icon onClick={() => plusOneCart(product._id)} color='green' name='plus square outline' style={{ marginLeft: '4px' }} />
+			        	<Icon onClick={() => plusOneCart(product._id)} link={true} color='green' name='plus square outline' style={{ marginLeft: '4px' }} />
 			        	<p style={{ color:'red' }}>{ no_stock }</p>
 			        </Table.Cell>
 			        <Table.Cell textAlign='center'>{price}</Table.Cell>
@@ -47,7 +48,7 @@ const Cart = () => {
 	        	)
 	        }
 
-	        <Table.Cell collapsing={true}><Icon onClick={() => deleteProduct(product._id)} color='red' name='delete' /></Table.Cell>
+	        <Table.Cell collapsing={true}><Icon onClick={() => deleteProduct(product._id)} link={true} color='red' name='delete' /></Table.Cell>
 	      </Table.Row>
 			)
 		})
@@ -73,21 +74,27 @@ const Cart = () => {
 		return(new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(total));
 	}
 
-	const deleteProduct = (product_id) => {
-		dispatch(removeProduct(product_id));
+	const deleteProduct = async (product_id) => {
+		setShouldDisplayLoader('block');
+		await dispatch(removeProduct(product_id));
+		setShouldDisplayLoader('none');
 	}
 
-	const plusOneCart = (product_id) => {
-		dispatch(plusOne(product_id));
+	const plusOneCart = async (product_id) => {
+		setShouldDisplayLoader('block');
+		await dispatch(plusOne(product_id));
+		setShouldDisplayLoader('none');
 	}
 
-	const minusOneCart = (product_id, quantity) => {
+	const minusOneCart = async (product_id, quantity) => {
 		if (quantity === 1){
 			dispatch(setMessage('Cantidad no puede ser cero.', 'red'))
 			return;
 		}
-
-		dispatch(minusOne(product_id));
+		
+		setShouldDisplayLoader('block');
+		await dispatch(minusOne(product_id));
+		setShouldDisplayLoader('none');
 	}
 
 	useEffect(() => {
@@ -98,8 +105,8 @@ const Cart = () => {
 
 	return(
 		<Transition visible={visibility} animation='scale' duration={500}>
-		<div className='main-wrapper' style={{ width: mainWidth }}>
-			 <Table basic>
+		<div className='main-wrapper'>
+			 <Table basic unstackable>
 		    <Table.Header>
 		      <Table.Row style={{backgroundColor: '#d9d9d9'}}>
 		        <Table.HeaderCell>Producto</Table.HeaderCell>
@@ -125,8 +132,13 @@ const Cart = () => {
 		      </Table.Row>
 		    </Table.Body>
 		  </Table>
+			<div className='icon-loader' style={{ display: shouldDisplayLoader }}>
+				<Icon name='spinner' loading={true} size='big' color='blue'/>
+			</div>
 		</div>
 		</Transition>
+
+
 	);
 }
 

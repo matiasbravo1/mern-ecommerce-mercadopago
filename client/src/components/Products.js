@@ -6,6 +6,7 @@ import Product from './Product';
 import Modal from './Modal';
 import { Loader, Dimmer } from 'semantic-ui-react';
 import './Main.css';
+import './Products.css';
 
 const Products = props => {
 	const [shouldDisplayModal, setShouldDisplayModal] = useState(false);
@@ -62,7 +63,7 @@ const Products = props => {
 			<div className='main-wrapper' style={{height: mainHeight }}>
         <h2>Categoria: { category } </h2>
         
-        <div style={{display: 'flex'}}>
+        <div className='products-wrapper'>
         	{renderContent()}
         </div>
 

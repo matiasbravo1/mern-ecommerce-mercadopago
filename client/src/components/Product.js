@@ -27,7 +27,7 @@ const Product = ({ product, setShouldDisplayModal }) => {
 						<p className="text-price">$ {product.price}</p>
 					</div>
 					<div className="card-carrito">
-						<Icon onClick={() => addToCart()} name='cart plus' size='large' />
+						<Icon onClick={() => addToCart()} link={true} name='cart plus' color='blue' size='large' />
 					</div>
 				</div>
 			</div>

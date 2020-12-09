@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
 import { useDispatch } from 'react-redux';
-import { fetchUser } from '../actions';
+import { fetchUser, fetchCart } from '../actions';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import Inicio from './Inicio';
@@ -12,10 +12,12 @@ import Message from './Message';
 import Cart from './Cart';
 
 const App = () => {
+ 
   const dispatch = useDispatch();
-  
-  useEffect(() => {
-    dispatch(fetchUser());
+
+  useEffect(async () => {
+    await dispatch(fetchUser());
+    dispatch (fetchCart());
   }, [])
 
   return (

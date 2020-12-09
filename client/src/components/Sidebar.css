@@ -2,8 +2,13 @@
 	width: 220px;
 	position: fixed;
 	left: 0;
-	top: 46px;
 	z-index: 2;
 	overflow-y: scroll;
-	background-color: black;
+	height: 100%;
+}
+.sidebar-menu{
+	border-radius:0!important;
+}
+.sidebar-wrapper::-webkit-scrollbar {
+  width: 6px;
 }

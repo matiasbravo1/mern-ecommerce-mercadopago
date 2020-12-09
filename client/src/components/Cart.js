@@ -105,40 +105,40 @@ const Cart = () => {
 
 	return(
 		<Transition visible={visibility} animation='scale' duration={500}>
-		<div className='main-wrapper'>
-			 <Table basic unstackable>
-		    <Table.Header>
-		      <Table.Row style={{backgroundColor: '#d9d9d9'}}>
-		        <Table.HeaderCell>Producto</Table.HeaderCell>
-		        <Table.HeaderCell>Marca</Table.HeaderCell>
-		        <Table.HeaderCell>Presentación</Table.HeaderCell>
-		        <Table.HeaderCell textAlign='center'>Cantidad</Table.HeaderCell>
-		        <Table.HeaderCell textAlign='center'>Precio Unitario</Table.HeaderCell>
-		        <Table.HeaderCell textAlign='center'>Precio Total</Table.HeaderCell>
-		        <Table.HeaderCell collapsing={true}></Table.HeaderCell>
-		      </Table.Row>
-		    </Table.Header>
+			<div className='main-wrapper'>
+				 <Table basic unstackable>
+			    <Table.Header>
+			      <Table.Row style={{backgroundColor: '#d9d9d9'}}>
+			        <Table.HeaderCell>Producto</Table.HeaderCell>
+			        <Table.HeaderCell>Marca</Table.HeaderCell>
+			        <Table.HeaderCell>Presentación</Table.HeaderCell>
+			        <Table.HeaderCell textAlign='center'>Cantidad</Table.HeaderCell>
+			        <Table.HeaderCell textAlign='center'>Precio Unitario</Table.HeaderCell>
+			        <Table.HeaderCell textAlign='center'>Precio Total</Table.HeaderCell>
+			        <Table.HeaderCell collapsing={true}></Table.HeaderCell>
+			      </Table.Row>
+			    </Table.Header>
 
-		    <Table.Body style={{backgroundColor: 'white'}}>
-		      { renderContent() }
-		      <Table.Row key='total'>
-		        <Table.Cell></Table.Cell>
-		        <Table.Cell></Table.Cell>
-		        <Table.Cell></Table.Cell>
-		        <Table.Cell textAlign='center'></Table.Cell>
-		        <Table.Cell textAlign='center' style={{ fontWeight: 'bold' }}>TOTAL</Table.Cell>
-		        <Table.Cell textAlign='center' style={{ fontWeight: 'bold' }}>{ calcTotal() }</Table.Cell>
-		        <Table.Cell collapsing={true}></Table.Cell>
-		      </Table.Row>
-		    </Table.Body>
-		  </Table>
-			<div className='icon-loader' style={{ display: shouldDisplayLoader }}>
-				<Icon name='spinner' loading={true} size='big' color='blue'/>
+			    <Table.Body style={{backgroundColor: 'white'}}>
+			      { renderContent() }
+			      <Table.Row key='total'>
+			        <Table.Cell></Table.Cell>
+			        <Table.Cell></Table.Cell>
+			        <Table.Cell></Table.Cell>
+			        <Table.Cell textAlign='center'></Table.Cell>
+			        <Table.Cell textAlign='center' style={{ fontWeight: 'bold' }}>TOTAL</Table.Cell>
+			        <Table.Cell textAlign='center' style={{ fontWeight: 'bold' }}>{ calcTotal() }</Table.Cell>
+			        <Table.Cell collapsing={true}></Table.Cell>
+			      </Table.Row>
+			    </Table.Body>
+			  </Table>
+
+				<div className='icon-loader' style={{ display: shouldDisplayLoader }}>
+					<Icon name='spinner' loading={true} size='big' color='blue'/>
+				</div>
+				
 			</div>
-		</div>
 		</Transition>
-
-
 	);
 }
 

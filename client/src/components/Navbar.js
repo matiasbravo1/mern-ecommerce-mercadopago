@@ -1,70 +1,221 @@
-import React, { Component } from 'react';
-import { Menu, Icon, Button } from 'semantic-ui-react';
-import { connect } from 'react-redux';
-import './Navbar.css';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { Menu, Icon, Button, Label, Dropdown } from 'semantic-ui-react';
+import { useSelector, useDispatch } from 'react-redux';
+import './Main.css';
 
-class Navbar extends Component {
-  renderContent() {
-    switch (this.props.auth) {
+const Navbar = () => {
+  const dispatch = useDispatch();
+  const auth = useSelector(store => store.auth);
+  const cart = useSelector(store => store.cart);
+  const [activeItem, handleItemClick] = useState('');
+
+  const trigger = (
+    <span>
+      <Icon name='user' /> Hello, Bob
+    </span>
+  )
+
+  const trigger2 = (
+              <Menu.Item
+              name='user'
+              active={activeItem === 'user'}
+              onClick={() => handleItemClick('user')}
+              style={{ width: '100%'}}
+            >
+              <Icon name='user'/>
+              Bob
+            </Menu.Item>
+  )
+
+
+  const renderContent = () => {
+    switch (auth) {
       case null:
         return;
       case false:
         return (
-        	<Button color='google plus' href="/auth/google">
-		      <Icon name='google' /> Ingresar con Google
-		    </Button>
-		);
+          <Menu color='red' inverted style={{ margin: '8px 16px'}} floated='right' >
+            <Menu.Item
+              href='/auth/google'
+              fitted='vertically'
+            >
+              <Icon name='google' /> Ingresar con Google
+            </Menu.Item>
+          </Menu>
+    );
       default:
         return (
-			<Button color='google plus' href="/api/logout">
-				<Icon name='google' /> Cerrar Sesión
-			</Button>
+        <>
+          <Menu color='grey' style={{ margin: '8px' }} floated='right' >
+            <Menu.Item
+              as={Link}
+              to='/cart'
+              name='cart'
+              active={activeItem === 'cart'}
+              onClick={() => handleItemClick('cart')}
+              fitted='vertically'
+            >
+              <Icon name='cart' />
+              Mi Carrito
+              <Label
+                circular
+                color='green'
+                style={{ float: 'none' }}
+              >
+                { Object.keys(cart).length }
+              </Label>
+            </Menu.Item>
+          </Menu>
+
+          <Menu color='grey' style={{ margin: '8px 16px'}} >
+            <Dropdown item trigger={trigger}>
+              <Dropdown.Menu>
+                <Dropdown.Item>Mi Perfil</Dropdown.Item>
+                <Dropdown.Item>Mis Compras</Dropdown.Item>
+                <Dropdown.Item
+                  href='/api/logout'
+                >
+                  Cerrar Sesión
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Menu>
+        </>
         );
     }
   }
 
-  render() {
-    return (
-      <Menu secondary color='blue' inverted size='large' className="navbar ui top fixed">
-
-        <img src='images/emercari_logo.png' className='logo' alt='Emercari Logo'/>
-        
-        <Menu.Menu position='right'>
-          	<Menu.Item
-	          	name='whatsapp'
-	          	onClick={() => window.open('https://ainsoft.net')}
-	        >
-	        	<Icon name='whatsapp' size='large' style={{ margin: '0'}}/>
-	        </Menu.Item>
-	        <Menu.Item
-	          	name='mail'
-	          	onClick={() => window.open('https://ainsoft.net')}
-	        >
-	        	<Icon name='mail outline' size='large' style={{ margin: '0'}}/>
-	        </Menu.Item>
-	        <Menu.Item
-	          	name='facebook'
-	          	onClick={() => window.open('https://ainsoft.net')}
-	        >
-	        	<Icon name='facebook' size='large' style={{ margin: '0'}}/>
-	        </Menu.Item>
-	        <Menu.Item
-	          	name='instagram'
-	          	onClick={() => window.open('https://ainsoft.net')}
-	        >
-	        	<Icon name='instagram' size='large' style={{ margin: '0'}}/>
-	        </Menu.Item>
-	        <div style={{ display: 'flex', alignItems: 'center' }}>
-        		{ this.renderContent() }
-			</div>
-        </Menu.Menu>
-      </Menu>
-    )
+const renderContent2 = () => {
+  switch (auth) {
+    case null:
+      return;
+    case false:
+      return (
+        <Menu.Item
+          href='/auth/google'
+        >
+          <Icon name='sign in' color='green' />
+          Ingresar
+        </Menu.Item>
+    );
+    default:
+      return (
+        <Dropdown icon={false} trigger={trigger2} style={{ padding: '0', width: '100%' }}>
+          <Dropdown.Menu>
+            <Dropdown.Item>Mi Perfil</Dropdown.Item>
+            <Dropdown.Item>Mis Compras</Dropdown.Item>
+            <Dropdown.Item
+              href='/api/logout'
+            >
+              Cerrar Sesión
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+    );
   }
+  }
+
+  return (
+    <>
+      <div className='navbar-large'>
+        <Menu fixed='top' borderless style={{ height: '59px' }}>
+          <Menu.Item header>
+            <img src='images/emercari_logo.png' className='logo' alt='Emercari Logo'/>
+          </Menu.Item>
+
+          <Menu  color='grey' style={{ margin: '8px 16px'}} >
+            <Menu.Item
+              as={Link}
+              to='/'
+              name='home'
+              active={activeItem === 'home'}
+              onClick={() => handleItemClick('home')}
+              fitted='vertically'
+            >
+              <Icon name='home' />
+              Inicio
+            </Menu.Item>
+
+            <Menu.Item
+              as={Link}
+              to='/como_comprar'
+              name='comoComprar'
+              active={activeItem === 'comoComprar'}
+              onClick={() => handleItemClick('comoComprar')}
+              fitted='vertically'
+            >
+              <Icon name='question circle outline' />
+              Como Comprar
+            </Menu.Item>
+
+            <Menu.Item
+              as={Link}
+              to='/contact'
+              name='contact'
+              active={activeItem === 'contact'}
+              onClick={() => handleItemClick('contact')}
+              fitted='vertically'
+            >
+              <Icon name='mail outline' />
+              Contacto
+            </Menu.Item>
+          </Menu>
+
+          { renderContent() }
+
+        </Menu>
+      </div>
+
+      <div className='navbar-small'>
+
+          <img src='images/emercari_logo.png' className='logo' alt='Emercari Logo'/>
+
+          <Menu icon='labeled' size='mini' widths={4} style={{ marginTop:'8px' }}>
+            <Menu.Item
+              name='menu'
+              active={activeItem === 'menu'}
+              onClick={() => handleItemClick('menu')}
+            >
+              <Icon name='bars' />
+              Menu
+            </Menu.Item>
+
+            <Menu.Item
+              name='products'
+              active={activeItem === 'products'}
+              onClick={() => handleItemClick('products')}
+            >
+              <Icon name='th large' />
+              Productos
+            </Menu.Item>
+
+            <Menu.Item
+              name='cart'
+              active={activeItem === 'cart'}
+              onClick={() => handleItemClick('cart')}
+            >
+              <Icon name='cart'>
+                <Label
+                  circular
+                  color='green'
+                  style={{ float: 'none', position: 'absolute', top: '5px' }}
+                >
+                  { Object.keys(cart).length }
+                </Label>
+              </Icon>
+              Mi Carrito
+              
+            </Menu.Item>
+
+            { renderContent2() }
+          </Menu>
+      </div>
+    </>
+  )
+  
 }
 
-function mapStateToProps({ auth }) {
-  return { auth };
-}
+export default Navbar;
 
-export default connect(mapStateToProps)(Navbar);
+

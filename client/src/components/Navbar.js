@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, Icon, Button, Label, Dropdown } from 'semantic-ui-react';
+import { Menu, Icon, Button, Label, Dropdown, Transition } from 'semantic-ui-react';
 import { useSelector, useDispatch } from 'react-redux';
+import ProductsList from './ProductsList';
 import './Main.css';
 
 const Navbar = () => {
@@ -9,6 +10,7 @@ const Navbar = () => {
   const auth = useSelector(store => store.auth);
   const cart = useSelector(store => store.cart);
   const [activeItem, handleItemClick] = useState('');
+  const [visibility, setVisibility] = useState('none');
 
   const trigger = (
     <span>
@@ -17,18 +19,29 @@ const Navbar = () => {
   )
 
   const trigger2 = (
-              <Menu.Item
-              name='user'
-              active={activeItem === 'user'}
-              onClick={() => handleItemClick('user')}
-              style={{ width: '100%'}}
-            >
-              <Icon name='user'/>
-              Bob
-            </Menu.Item>
+    <Menu.Item
+      name='user'
+      active={false}
+      onClick={() => handleItemClick('user')}
+      style={{ width: '100%'}}
+    >
+      <Icon name='user'/>
+      Bob
+    </Menu.Item>
   )
 
-
+  const trigger3 = (
+    <Menu.Item
+      name='menu'
+      active={false}
+      onClick={() => handleItemClick('menu')}
+      style={{ width: '100%'}}
+    >
+      <Icon name='bars' />
+      Menu
+    </Menu.Item>
+  )
+  
   const renderContent = () => {
     switch (auth) {
       case null:
@@ -86,38 +99,43 @@ const Navbar = () => {
     }
   }
 
-const renderContent2 = () => {
-  switch (auth) {
-    case null:
-      return;
-    case false:
-      return (
-        <Menu.Item
-          href='/auth/google'
-        >
-          <Icon name='sign in' color='green' />
-          Ingresar
-        </Menu.Item>
-    );
-    default:
-      return (
-        <Dropdown icon={false} trigger={trigger2} style={{ padding: '0', width: '100%' }}>
-          <Dropdown.Menu>
-            <Dropdown.Item>Mi Perfil</Dropdown.Item>
-            <Dropdown.Item>Mis Compras</Dropdown.Item>
-            <Dropdown.Item
-              href='/api/logout'
-            >
-              Cerrar Sesión
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-    );
-  }
+  const renderContent2 = () => {
+    switch (auth) {
+      case null:
+        return;
+      case false:
+        return (
+          <Menu.Item
+            href='/auth/google'
+          >
+            <Icon name='sign in' color='green' />
+            Ingresar
+          </Menu.Item>
+      );
+      default:
+        return (
+          <Dropdown icon={false} trigger={trigger2} style={{ padding: '0', width: '100%' }}>
+            <Dropdown.Menu>
+              <Dropdown.Item>Mi Perfil</Dropdown.Item>
+              <Dropdown.Item>Mis Compras</Dropdown.Item>
+              <Dropdown.Item
+                href='/api/logout'
+              >
+                Cerrar Sesión
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+      );
+    }
   }
 
   return (
     <>
+      <ProductsList 
+        visibility={visibility}
+        setVisibility={setVisibility}
+      />
+      
       <div className='navbar-large'>
         <Menu fixed='top' borderless style={{ height: '59px' }}>
           <Menu.Item header>
@@ -167,30 +185,33 @@ const renderContent2 = () => {
         </Menu>
       </div>
 
+      
       <div className='navbar-small'>
 
           <img src='images/emercari_logo.png' className='logo' alt='Emercari Logo'/>
 
           <Menu icon='labeled' size='mini' widths={4} style={{ marginTop:'8px' }}>
-            <Menu.Item
-              name='menu'
-              active={activeItem === 'menu'}
-              onClick={() => handleItemClick('menu')}
-            >
-              <Icon name='bars' />
-              Menu
-            </Menu.Item>
+
+            <Dropdown icon={false} trigger={trigger3} style={{ padding: '0', width: '100%' }}>
+              <Dropdown.Menu>
+                <Dropdown.Item as={Link} to='/'>Inicio</Dropdown.Item>
+                <Dropdown.Item as={Link} to='/como_comprar'>Como Comprar</Dropdown.Item>
+                <Dropdown.Item as={Link} to='/contact'>Contacto</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
 
             <Menu.Item
               name='products'
               active={activeItem === 'products'}
-              onClick={() => handleItemClick('products')}
+              onClick={() => setVisibility('block')}
             >
               <Icon name='th large' />
               Productos
             </Menu.Item>
 
             <Menu.Item
+              as={Link}
+              to='/cart'
               name='cart'
               active={activeItem === 'cart'}
               onClick={() => handleItemClick('cart')}
@@ -211,6 +232,9 @@ const renderContent2 = () => {
             { renderContent2() }
           </Menu>
       </div>
+
+      
+
     </>
   )
   

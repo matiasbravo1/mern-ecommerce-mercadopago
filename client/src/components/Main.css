@@ -21,7 +21,7 @@
 @media screen and (max-width: 992px) {
   .main-wrapper{
   	margin-left: 0px;
-  	margin-top: 80px;
+  	margin-top: 130px;
   }
   .navbar-large{
   	display: none;
@@ -37,6 +37,7 @@
   	background-color: white;
   	box-shadow: 0 1px 2px 0 rgba(34,36,38,.15);
   	padding: 8px 12px;
+
   }
   .logo{
 		width: 250px!important;
@@ -48,4 +49,5 @@
 
 .main-wrapper{
 	padding: 16px 12px;
+  overflow-x: hidden;
 }

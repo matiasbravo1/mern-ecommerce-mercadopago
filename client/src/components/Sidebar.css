@@ -1,4 +1,4 @@
-.sidebar-wrapper{
+.sidebar-wrapper {
 	width: 220px;
 	position: fixed;
 	left: 0;
@@ -6,9 +6,9 @@
 	overflow-y: scroll;
 	height: 100%;
 }
-.sidebar-menu{
-	border-radius:0!important;
+.sidebar-menu {
+	border-radius: 0 !important;
 }
 .sidebar-wrapper::-webkit-scrollbar {
-  width: 6px;
+	width: 6px;
 }

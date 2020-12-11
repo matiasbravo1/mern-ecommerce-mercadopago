@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const productSchema = new Schema({
@@ -17,7 +17,7 @@ const productSchema = new Schema({
   cost: { type: Number, default: 0 },
   show: { type: Boolean, default: true },
   date_created: { type: Date, default: Date.now },
-  deleted_at: Date
+  deleted_at: Date,
 });
 
-mongoose.model('products', productSchema);
+mongoose.model("products", productSchema);

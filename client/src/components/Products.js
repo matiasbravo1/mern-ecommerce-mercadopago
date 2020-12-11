@@ -1,78 +1,79 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts } from '../actions';
-import Product from './Product';
-import Modal from './Modal';
-import { Loader, Dimmer } from 'semantic-ui-react';
-import './Main.css';
-import './Products.css';
+import React from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "../actions";
+import Product from "./Product";
+import Modal from "./Modal";
+import { Loader, Dimmer } from "semantic-ui-react";
+import "./Main.css";
+import "./Products.css";
 
-const Products = props => {
+const Products = (props) => {
 	const [shouldDisplayModal, setShouldDisplayModal] = useState(false);
 	const [shouldDisplayLoader, setShouldDisplayLoader] = useState(false);
 
-	const products = useSelector(store => store.products);
+	const products = useSelector((store) => store.products);
 	const dispatch = useDispatch();
 	const category = props.match.params.category;
-	
+
 	useEffect(() => {
 		setShouldDisplayLoader(true);
-    dispatch(fetchProducts(category));
-  }, [ category, dispatch ]);
+		dispatch(fetchProducts(category));
+	}, [category, dispatch]);
 
-  useEffect(() => {
+	useEffect(() => {
 		setShouldDisplayLoader(false);
-  }, [ products ]);
+	}, [products]);
 
 	const renderContent = () => {
-		if (products.length !== 0){
-			return products.map( product => {
+		if (products.length !== 0) {
+			return products.map((product) => {
 				const avaible = product.in - product.out - product.reserved;
 
-				if (avaible === 0){
-					return;
-				}
-				
-				if(product.deleted_at){
+				if (avaible === 0) {
 					return;
 				}
 
-				return(
-					<Product 
-						product={ product }
-						setShouldDisplayModal = { setShouldDisplayModal }
+				if (product.deleted_at) {
+					return;
+				}
+
+				return (
+					<Product
+						product={product}
+						setShouldDisplayModal={setShouldDisplayModal}
 					/>
-				)
-			
+				);
 			});
-		}else{
+		} else {
 			return "No hay productos.";
 		}
-
-	}
+	};
 
 	const dimmerWidth = window.innerWidth - 220;
 	const mainHeight = window.innerHeight;
 
-	return(
+	return (
 		<div>
-			<Dimmer className='main-wrapper' style={{width: dimmerWidth, height: mainHeight }} active={shouldDisplayLoader}>
-				<Loader/>
+			<Dimmer
+				className="main-wrapper"
+				style={{ width: dimmerWidth, height: mainHeight }}
+				active={shouldDisplayLoader}
+			>
+				<Loader />
 			</Dimmer>
-			<div className='main-wrapper' style={{height: mainHeight }}>
-        <h2>Categoria: { category } </h2>
-        
-        <div className='products-wrapper'>
-        	{renderContent()}
-        </div>
+			<div className="main-wrapper" style={{ height: mainHeight }}>
+				<h2>Categoria: {category} </h2>
 
-		    {	shouldDisplayModal && (	<Modal setShouldDisplayModal = { setShouldDisplayModal } /> )		}
-	    </div>
-    </div>
+				<div className="products-wrapper">{renderContent()}</div>
+
+				{shouldDisplayModal && (
+					<Modal setShouldDisplayModal={setShouldDisplayModal} />
+				)}
+			</div>
+		</div>
 	);
-
-}
+};
 
 export default Products;
 
@@ -86,7 +87,7 @@ export default Products;
 // 		        <Image size='medium' src='/images/avatar/large/rachel.png' wrapped />
 // 		        <Modal.Description>
 // 		          <Header>Producto</Header>
-		          	
+
 // 	        		{renderModal()}
 // 		        </Modal.Description>
 // 		      </Modal.Content>
@@ -103,8 +104,6 @@ export default Products;
 // 		        />
 // 		      </Modal.Actions>
 // 		    </Modal>
-
-
 
 // import React, { Component } from 'react';
 // import { connect } from 'react-redux';
@@ -136,7 +135,7 @@ export default Products;
 // 		console.log(this.props.products);
 
 // 		return(
-// 			<div className='main-wrapper'> 
+// 			<div className='main-wrapper'>
 //             <h2>Categoria: { this.props.match.params.category } </h2>
 //             <h2>{ this.renderContent() }</h2>
 //           </div>
@@ -149,4 +148,3 @@ export default Products;
 // }
 
 // export default connect(mapStateToProps, { fetchProducts })(Products);
-

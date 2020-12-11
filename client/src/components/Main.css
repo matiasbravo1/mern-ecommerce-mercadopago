@@ -1,53 +1,51 @@
 @media screen and (min-width: 992px) {
-  .main-wrapper{
-  	margin-left: 220px;
-  	margin-top: 58px;
+  .main-wrapper {
+    margin-left: 220px;
+    margin-top: 58px;
   }
-  .navbar-large{
-  	display: block;
+  .navbar-large {
+    display: block;
   }
-  .navbar-small{
-  	display: none;
+  .navbar-small {
+    display: none;
   }
-  .sidebar{
-  	display: block;
-  	top:58px;
+  .sidebar {
+    display: block;
+    top: 58px;
   }
-  .logo{
-		width: 190px!important;
-	}
+  .logo {
+    width: 190px !important;
+  }
 }
 
 @media screen and (max-width: 992px) {
-  .main-wrapper{
-  	margin-left: 0px;
-  	margin-top: 130px;
+  .main-wrapper {
+    margin-left: 0px;
+    margin-top: 130px;
   }
-  .navbar-large{
-  	display: none;
+  .navbar-large {
+    display: none;
   }
-  .navbar-small{
-  	display:block;
-  	width:100%;
-  	justify-content:center;
-  	text-align: center;
-  	position:fixed;
-  	top:0;
-  	z-index: 2;
-  	background-color: white;
-  	box-shadow: 0 1px 2px 0 rgba(34,36,38,.15);
-  	padding: 8px 12px;
-
+  .navbar-small {
+    display: block;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    z-index: 2;
+    background-color: white;
+    box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.15);
+    padding: 8px 12px;
   }
-  .logo{
-		width: 250px!important;
-	}
-  .sidebar{
-  	display: none;
+  .logo {
+    width: 250px !important;
+  }
+  .sidebar {
+    display: none;
   }
 }
 
-.main-wrapper{
-	padding: 16px 12px;
-  overflow-x: hidden;
+.main-wrapper {
+  padding: 16px 12px;
 }

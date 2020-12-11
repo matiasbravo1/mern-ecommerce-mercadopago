@@ -1,10 +1,10 @@
-import { SELECT_PRODUCT } from '../actions/types';
+import { SELECT_PRODUCT } from "../actions/types";
 
-export default function(state = {}, action) {
-  switch (action.type) {
-    case SELECT_PRODUCT:
-      return action.payload || false;
-    default:
-      return state;
-  }
+export default function (state = {}, action) {
+	switch (action.type) {
+		case SELECT_PRODUCT:
+			return action.payload || false;
+		default:
+			return state;
+	}
 }

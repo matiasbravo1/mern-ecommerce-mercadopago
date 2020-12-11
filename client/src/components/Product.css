@@ -1,60 +1,60 @@
-.card1{
+.card1 {
 	margin-left: 8px;
 	margin-right: 8px;
 	margin-top: 1rem;
 	margin-bottom: 1rem;
 }
 
-.card2{
+.card2 {
 	height: 291px;
 	width: 175px;
 	overflow: hidden;
 	padding: 0.25rem;
 	background-color: white;
 	border-radius: 4px;
-	box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
-.card-img{
+.card-img {
 	height: 175px;
 	width: 100%;
 	background-color: black;
 }
 
-.text-container{
-	color: #4D4D4D;
+.text-container {
+	color: #4d4d4d;
 	height: 85px;
 	overflow: hidden;
 	font-weight: 400;
 	text-align: center;
-	margin:0;
-	padding:2px;
+	margin: 0;
+	padding: 2px;
 }
 
-.text-name{
-	font-size:14px;
-	margin:0;
+.text-name {
+	font-size: 14px;
+	margin: 0;
 }
 
-.text-brand{
-	font-size:14px;
-	margin:0;
+.text-brand {
+	font-size: 14px;
+	margin: 0;
 	font-weight: bold;
 }
 
-.text-presentation{
-	font-size:12px;
-	margin:0;
+.text-presentation {
+	font-size: 12px;
+	margin: 0;
 	color: grey;
 }
 
-.card-footer{
-	display:flex;
+.card-footer {
+	display: flex;
 	justify-content: space-between;
 	padding: 0 6px;
 }
 
-.text-price{
+.text-price {
 	font-weight: 400;
-	color:green;
+	color: green;
 }

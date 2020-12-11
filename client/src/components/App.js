@@ -1,24 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
-import 'semantic-ui-css/semantic.min.css';
-import { useDispatch } from 'react-redux';
-import { fetchUser, fetchCart } from '../actions';
-import Navbar from './Navbar';
-import Sidebar from './Sidebar';
-import Inicio from './Inicio';
-import Como_comprar from './Como_comprar';
-import Products from './Products';
-import Message from './Message';
-import Cart from './Cart';
+import React, { useEffect, useState } from "react";
+import { BrowserRouter, Route } from "react-router-dom";
+import "semantic-ui-css/semantic.min.css";
+import { useDispatch } from "react-redux";
+import { fetchUser, fetchCart } from "../actions";
+import Navbar from "./Navbar";
+import Sidebar from "./Sidebar";
+import Inicio from "./Inicio";
+import Como_comprar from "./Como_comprar";
+import Products from "./Products";
+import Message from "./Message";
+import Cart from "./Cart";
 
 const App = () => {
- 
   const dispatch = useDispatch();
 
   useEffect(async () => {
     await dispatch(fetchUser());
-    dispatch (fetchCart());
-  }, [])
+    dispatch(fetchCart());
+  }, []);
 
   return (
     <div>
@@ -33,12 +32,9 @@ const App = () => {
       </BrowserRouter>
     </div>
   );
-
-}
+};
 
 export default App;
-
-
 
 // import React, { Component } from 'react';
 // import { BrowserRouter, Route } from 'react-router-dom';

@@ -1,6 +1,6 @@
 import { SELECT_PRODUCT } from "../actions/types";
 
-export default function (state = {}, action) {
+export default function foo(state = {}, action) {
 	switch (action.type) {
 		case SELECT_PRODUCT:
 			return action.payload || false;

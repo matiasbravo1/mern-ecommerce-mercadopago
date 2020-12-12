@@ -31,11 +31,11 @@ const Products = (props) => {
 				const avaible = product.in - product.out - product.reserved;
 
 				if (avaible === 0) {
-					return;
+					return '';
 				}
 
 				if (product.deleted_at) {
-					return;
+					return '';
 				}
 
 				return (

@@ -4,8 +4,8 @@ const { Schema } = mongoose;
 const productSchema = new Schema({
   name: String,
   brand: String,
-  category: Number,
-  subcategory: Number,
+  category_id: { type: Schema.Types.ObjectId, ref: "categories" },
+  subcategory_id: { type: Schema.Types.ObjectId, ref: "subcategories" },
   code: String,
   short_description: String,
   large_description: String,

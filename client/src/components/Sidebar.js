@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Input, Menu } from "semantic-ui-react";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import "./Sidebar.css";
 import "./Main.css";

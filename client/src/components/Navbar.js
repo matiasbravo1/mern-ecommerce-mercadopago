@@ -1,19 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Menu,
   Icon,
-  Button,
   Label,
   Dropdown,
-  Transition,
 } from "semantic-ui-react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import ProductsList from "./ProductsList";
 import "./Main.css";
 
 const Navbar = () => {
-  const dispatch = useDispatch();
   const auth = useSelector((store) => store.auth);
   const cart = useSelector((store) => store.cart);
   const [activeItem, handleItemClick] = useState("");

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import "semantic-ui-css/semantic.min.css";
 import { useDispatch } from "react-redux";
@@ -14,10 +14,14 @@ import Cart from "./Cart";
 const App = () => {
   const dispatch = useDispatch();
 
-  useEffect(async () => {
-    await dispatch(fetchUser());
+  useEffect(() => {
+    const fetchUser2 = async () => {
+      await dispatch(fetchUser());  
+    }
+    
+    fetchUser2();
     dispatch(fetchCart());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>

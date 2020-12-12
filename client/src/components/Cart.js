@@ -141,7 +141,7 @@ const Cart = () => {
 		dispatch(fetchCart());
 
 		setVisibility(true);
-	}, []);
+	}, [dispatch]);
 
 	return (
 		<Transition visible={visibility} animation="scale" duration={500}>

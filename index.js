@@ -7,6 +7,8 @@ const passport = require("passport");
 
 require("./models/User");
 require("./models/Product");
+require("./models/Category");
+require("./models/Subcategory");
 
 require("./services/passport");
 
@@ -39,6 +41,7 @@ app.use(passport.session());
 
 require("./routes/authRoutes")(app);
 require("./routes/productRoutes")(app);
+require("./routes/categoryRoutes")(app);
 
 if (process.env.NODE_ENV === "production") {
   // Express will serve up production assets

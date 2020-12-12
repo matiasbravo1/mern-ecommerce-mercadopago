@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { Transition } from "semantic-ui-react";
+import React from "react";
 import "./ProductsList.css";
 
 const ProductsList = ({ visibility, setVisibility }) => {

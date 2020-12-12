@@ -5,6 +5,7 @@ import {
   SELECT_PRODUCT,
   CART_PRODUCTS,
   MESSAGE,
+  FETCH_CATEGORIES,
 } from "./types";
 
 export const fetchUser = () => async (dispatch) => {
@@ -95,4 +96,12 @@ export const setMessage = (message, color) => {
     type: MESSAGE,
     payload: { message: message, color: color },
   };
+};
+
+export const fetchCategories = () => async (dispatch) => {
+  const res = await axios.get("/api/fetch_categories/");
+
+  if (!res.data.error) {
+    dispatch({ type: FETCH_CATEGORIES, payload: res.data });
+  }
 };

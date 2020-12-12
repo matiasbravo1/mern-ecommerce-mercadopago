@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import "semantic-ui-css/semantic.min.css";
 import { useDispatch } from "react-redux";
-import { fetchUser, fetchCart } from "../actions";
+import { fetchUser, fetchCart, fetchCategories } from "../actions";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import Inicio from "./Inicio";
@@ -16,9 +16,10 @@ const App = () => {
 
   useEffect(() => {
     const fetchUser2 = async () => {
-      await dispatch(fetchUser());  
-    }
-    
+      await dispatch(fetchUser());
+    };
+
+    dispatch(fetchCategories());
     fetchUser2();
     dispatch(fetchCart());
   }, [dispatch]);

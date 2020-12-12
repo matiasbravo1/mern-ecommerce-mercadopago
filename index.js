@@ -8,7 +8,6 @@ const passport = require("passport");
 require("./models/User");
 require("./models/Product");
 require("./models/Category");
-require("./models/Subcategory");
 
 require("./services/passport");
 

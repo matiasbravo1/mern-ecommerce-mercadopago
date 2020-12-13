@@ -5,9 +5,14 @@ const passport = require("passport");
 const requireLogin = require("../middlewares/requireLogin");
 
 module.exports = (app) => {
-	app.get("/api/search_products/:category", async (req, res) => {
+	app.get("/api/search_products/:category/:subcategory", async (req, res) => {
 		const query =
-			req.params.category == "all" ? null : { category: req.params.category };
+			req.params.category == "all"
+				? null
+				: {
+						category_id: req.params.category,
+						subcategory_id: req.params.subcategory,
+				  };
 
 		const products = await Product.find(query);
 
@@ -133,8 +138,8 @@ module.exports = (app) => {
 		const product = new Product({
 			name: "Bananas",
 			brand: "Ecuador",
-			category: 2,
-			subcategory: 2,
+			category_id: "5fd53f486d509b049cab9b90",
+			subcategory_id: "5fd53f486d509b049cab9b99",
 			code: "25433422",
 			short_description: "Nao tem carozo.",
 			presentation: "1 kilo",

@@ -31,7 +31,11 @@ const App = () => {
         <Sidebar />
         <Route exact path="/" component={Inicio} />
         <Route exact path="/como_comprar" component={Como_comprar} />
-        <Route exact path="/products/:category" component={Products} />
+        <Route
+          exact
+          path="/products/:category/:subcategory"
+          component={Products}
+        />
         <Route exact path="/cart" component={Cart} />
         <Message />
       </BrowserRouter>

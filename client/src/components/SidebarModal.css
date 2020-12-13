@@ -16,4 +16,10 @@
 	top: 0;
 	left: 0;
 	z-index: 3005;
+	padding: 12px 0px;
+	overflow-y: scroll;
+}
+h2 {
+	text-align: center;
+	margin-bottom: 0px;
 }

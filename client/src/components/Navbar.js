@@ -1,13 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  Menu,
-  Icon,
-  Label,
-  Dropdown,
-} from "semantic-ui-react";
+import { Menu, Icon, Label, Dropdown } from "semantic-ui-react";
 import { useSelector } from "react-redux";
-import ProductsList from "./ProductsList";
+import SidebarModal from "./SidebarModal";
 import "./Main.css";
 
 const Navbar = () => {
@@ -129,7 +124,7 @@ const Navbar = () => {
 
   return (
     <>
-      <ProductsList visibility={visibility} setVisibility={setVisibility} />
+      <SidebarModal visibility={visibility} setVisibility={setVisibility} />
 
       <div className="navbar-large">
         <Menu fixed="top" borderless style={{ height: "59px" }}>

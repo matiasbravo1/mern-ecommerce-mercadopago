@@ -34,6 +34,45 @@ module.exports = (app) => {
 		}
 	});
 
+	app.get("/api/many_categories", async (req, res) => {
+		const categories = [
+			{
+				order: 1,
+				category: "Category 1",
+				subcategories: [
+					{ subcategory: "Subcategory 1" },
+					{ subcategory: "Subcategory 2" },
+					{ subcategory: "Subcategory 3" },
+				],
+			},
+			{
+				order: 2,
+				category: "Category 2",
+				subcategories: [
+					{ subcategory: "Subcategory 4" },
+					{ subcategory: "Subcategory 5" },
+					{ subcategory: "Subcategory 6" },
+				],
+			},
+			{
+				order: 3,
+				category: "Category 3",
+				subcategories: [
+					{ subcategory: "Subcategory 7" },
+					{ subcategory: "Subcategory 8" },
+					{ subcategory: "Subcategory 9" },
+				],
+			},
+		];
+
+		try {
+			const new_category = await Category.insertMany(categories);
+			res.send(new_category);
+		} catch (err) {
+			res.status(422).send(err);
+		}
+	});
+
 	app.get("/api/fetch_categories", async (req, res) => {
 		const query = { show: true };
 

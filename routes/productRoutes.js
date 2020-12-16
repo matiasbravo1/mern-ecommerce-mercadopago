@@ -157,4 +157,114 @@ module.exports = (app) => {
 			res.status(422).send(err);
 		}
 	});
+
+	app.get("/api/many_products", async (req, res) => {
+		const products = [
+			{
+				name: "Product 1",
+				brand: "Brand 1",
+				category_id: "5fda1cd881244f0017253008",
+				subcategory_id: "5fda1cd881244f0017253009",
+				code: "code00001",
+				short_description: "description00001",
+				presentation: "1 kilo",
+				in: 10,
+				out: 2,
+				reserved: 0,
+				price: 135,
+				cost: 105,
+			},
+			{
+				name: "Product 2",
+				brand: "Brand 2",
+				category_id: "5fda1cd881244f0017253008",
+				subcategory_id: "5fda1cd881244f001725300a",
+				code: "code00002",
+				short_description: "description00002",
+				presentation: "1 kilo",
+				in: 10,
+				out: 2,
+				reserved: 0,
+				price: 135,
+				cost: 105,
+			},
+			{
+				name: "Product 3",
+				brand: "Brand 3",
+				category_id: "5fda1cd881244f0017253008",
+				subcategory_id: "5fda1cd881244f001725300a",
+				code: "code00003",
+				short_description: "description00003",
+				presentation: "1 kilo",
+				in: 10,
+				out: 2,
+				reserved: 0,
+				price: 135,
+				cost: 105,
+			},
+			{
+				name: "Product 4",
+				brand: "Brand 4",
+				category_id: "5fda1cd881244f0017253008",
+				subcategory_id: "5fda1cd881244f001725300b",
+				code: "code00004",
+				short_description: "description00004",
+				presentation: "1 kilo",
+				in: 10,
+				out: 2,
+				reserved: 0,
+				price: 135,
+				cost: 105,
+			},
+			{
+				name: "Product 5",
+				brand: "Brand 5",
+				category_id: "5fda1cd881244f001725300c",
+				subcategory_id: "5fda1cd881244f001725300d",
+				code: "code00005",
+				short_description: "description00005",
+				presentation: "1 kilo",
+				in: 10,
+				out: 2,
+				reserved: 0,
+				price: 135,
+				cost: 105,
+			},
+			{
+				name: "Product 6",
+				brand: "Brand 6",
+				category_id: "5fda1cd881244f001725300c",
+				subcategory_id: "5fda1cd881244f001725300e",
+				code: "code00006",
+				short_description: "description00006",
+				presentation: "1 kilo",
+				in: 10,
+				out: 2,
+				reserved: 0,
+				price: 135,
+				cost: 105,
+			},
+			{
+				name: "Product 7",
+				brand: "Brand 7",
+				category_id: "5fda1cd881244f001725300c",
+				subcategory_id: "5fda1cd881244f001725300e",
+				code: "code00007",
+				short_description: "description00007",
+				presentation: "1 kilo",
+				in: 10,
+				out: 2,
+				reserved: 0,
+				price: 135,
+				cost: 105,
+			},
+		];
+
+		try {
+			const new_products = await Product.insertMany(products);
+			res.send(new_products);
+		} catch (err) {
+			res.status(422).send(err);
+		}
+	});
 };
